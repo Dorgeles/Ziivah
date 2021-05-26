@@ -13,7 +13,7 @@ class AddChildrenScreen extends StatefulWidget {
 
 class _AddChildrenScreenState extends State<AddChildrenScreen> {
   List<Grade> _grades;
-  List<String> _gradesList;
+  List<String> _gradesList = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -37,6 +37,7 @@ class _AddChildrenScreenState extends State<AddChildrenScreen> {
     });
   }
 
+  List<String> choice = [];
   String niveau = "Niveau scolaire";
   @override
   Widget build(BuildContext context) {
@@ -87,26 +88,59 @@ class _AddChildrenScreenState extends State<AddChildrenScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Container(
-                              height: 50,
-                              width: 50,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25),
-                                color: Colors.green[200],
-                              ),
-                              child: Center(
-                                child: Icon(LineIcons.female),
+                            GestureDetector(
+                              behavior: HitTestBehavior.translucent,
+                              onTap: () {
+                                setState(() {
+                                  choice.clear();
+                                  choice.add("female");
+                                  print(choice[0]);
+                                });
+                              },
+                              child: Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(25),
+                                  color: choice.contains("female")
+                                      ? blue
+                                      : Colors.green[200],
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    LineIcons.female,
+                                    color: choice.contains("female")
+                                        ? white
+                                        : dark,
+                                  ),
+                                ),
                               ),
                             ),
-                            Container(
-                              height: 50,
-                              width: 50,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25),
-                                color: Colors.green[200],
-                              ),
-                              child: Center(
-                                child: Icon(LineIcons.male),
+                            GestureDetector(
+                              behavior: HitTestBehavior.translucent,
+                              onTap: () {
+                                setState(() {
+                                  choice.clear();
+                                  choice.add("male");
+                                  print(choice[0]);
+                                });
+                              },
+                              child: Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(25),
+                                  color: choice.contains("male")
+                                      ? blue
+                                      : Colors.green[200],
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    LineIcons.male,
+                                    color:
+                                        choice.contains("male") ? white : dark,
+                                  ),
+                                ),
                               ),
                             ),
                           ],
@@ -127,10 +161,11 @@ class _AddChildrenScreenState extends State<AddChildrenScreen> {
                           color: white,
                         ),
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Center(
                                 child: Text(
-                              niveau,
+                              '   $niveau',
                               style: TextStyle(
                                 fontSize: 20,
                                 color: grey,
@@ -140,6 +175,7 @@ class _AddChildrenScreenState extends State<AddChildrenScreen> {
                                 ? Column(
                                     children: [
                                       PopupMenuButton<String>(
+                                        icon: Icon(Icons.school),
                                         onSelected: actionNiveau,
                                         itemBuilder: (BuildContext context) {
                                           return _gradesList
@@ -172,43 +208,24 @@ class _AddChildrenScreenState extends State<AddChildrenScreen> {
                         type: TextInputType.phone,
                       ),
                       SizedBox(
-                        height: 20,
-                      ),
-                      // Container(
-                      //     width: MediaQuery.of(context).size.width - 130,
-                      //     height: 70,
-                      //     child:
-                      //      Row(
-                      //       mainAxisAlignment:
-                      //           MainAxisAlignment.spaceBetween,
-                      //       children: [
-                      //         // Text(abonnementChoice),
-                      //         Column(
-                      //           crossAxisAlignment: CrossAxisAlignment.end,
-                      //           mainAxisAlignment: MainAxisAlignment.center,
-                      //           children: [
-
-                      //           ],
-                      //         ),
-                      //       ],
-                      //     )),
-                      SizedBox(
-                        height: 20,
+                        height: 30,
                       ),
                     ],
                   ),
                 ),
               ),
             ),
-            bottomSheet: Container(
-              width: MediaQuery.of(context).size.width,
-              height: 70,
-              child: Center(
-                child: Text(
-                  'Enregister',
-                  style: TextStyle(
-                    fontSize: 25,
-                    color: dark,
+            bottomSheet: GestureDetector(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 60,
+                child: Center(
+                  child: Text(
+                    'Enregister',
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: dark,
+                    ),
                   ),
                 ),
               ),
