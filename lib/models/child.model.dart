@@ -1,20 +1,17 @@
-import 'dart:html';
-
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:ziivah/models/coach.model.dart';
 import 'package:ziivah/models/parent.model.dart';
-
 import 'user.model.dart';
 
 class Child {
-  final String firstname;
-  final String lastname;
-  final String niveau;
+  final String fullname;
+  final String grade;
   final User user;
   final String schoolName;
   final String phoneTel;
+  final String email;
   final Parent parent;
-  final Coach coach;
+  final List<Coach> coach;
   final String objectId;
   final DateTime createdAt;
   final DateTime updateAt;
@@ -23,9 +20,9 @@ class Child {
     this.objectId,
     this.createdAt,
     this.updateAt,
-    this.firstname,
-    this.lastname,
-    this.niveau,
+    this.fullname,
+    this.email,
+    this.grade,
     this.user,
     this.schoolName,
     this.phoneTel,
@@ -33,11 +30,11 @@ class Child {
     this.coach,
   });
   Child.fromParse(ParseObject object)
-      : firstname = object.get('firstname'),
-        lastname = object.get('lastname'),
-        niveau = object.get('niveau'),
+      : fullname = object.get('fullname'),
+        grade = object.get('grade'),
         schoolName = object.get('schoolName'),
         phoneTel = object.get('phoneTel'),
+        email = object.get('email'),
         user = object.get('user') != null
             ? User.fromParse(object.get('user'))
             : null,
@@ -45,7 +42,7 @@ class Child {
             ? Parent.fromParse(object.get('parent'))
             : null,
         coach = object.get('coach') != null
-            ? Coach.fromParse(object.get("coach"))
+            ? List<Coach>.from((object.get("coach")))
             : null,
         objectId = object.objectId,
         createdAt = object.createdAt,

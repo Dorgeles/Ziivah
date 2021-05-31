@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:ziivah/components/background.component.dart';
 import 'package:ziivah/components/custom-textfield.component.dart';
+import 'package:ziivah/dialog/info.dialog.dart';
+import 'package:ziivah/models/child.model.dart';
 import 'package:ziivah/models/grade.model.dart';
+import 'package:ziivah/models/parent.model.dart';
+import 'package:ziivah/screens/parent/home-screen/home.screen.dart';
+import 'package:ziivah/services/child.service.dart';
 import 'package:ziivah/services/grade.service.dart';
+import 'package:ziivah/services/parent.service.dart';
 import 'package:ziivah/theme/color.theme.dart';
 
 class AddChildrenScreen extends StatefulWidget {
@@ -14,10 +21,18 @@ class AddChildrenScreen extends StatefulWidget {
 class _AddChildrenScreenState extends State<AddChildrenScreen> {
   List<Grade> _grades;
   List<String> _gradesList = [];
+  Parent _parent;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    ParseUser.currentUser().then((user) {
+      ParentService().getByUser(user).then((value) {
+        setState(() {
+          _parent = value;
+        });
+      });
+    });
     GradeService().getAllGrade().then((grades) {
       setState(() {
         _grades = grades;
@@ -39,6 +54,11 @@ class _AddChildrenScreenState extends State<AddChildrenScreen> {
 
   List<String> choice = [];
   String niveau = "Niveau scolaire";
+  TextEditingController fullname = TextEditingController();
+  TextEditingController emailCtrl = TextEditingController();
+  TextEditingController passwordCtrl = TextEditingController();
+  TextEditingController schoolName = TextEditingController();
+  TextEditingController phoneCtrl = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -62,6 +82,7 @@ class _AddChildrenScreenState extends State<AddChildrenScreen> {
                         height: 50,
                       ),
                       CustomTextField(
+                        controller: fullname,
                         isPassword: false,
                         label: "Noms prénoms",
                       ),
@@ -69,6 +90,7 @@ class _AddChildrenScreenState extends State<AddChildrenScreen> {
                         height: 20,
                       ),
                       CustomTextField(
+                        controller: emailCtrl,
                         isPassword: false,
                         type: TextInputType.emailAddress,
                         label: "Email",
@@ -77,6 +99,7 @@ class _AddChildrenScreenState extends State<AddChildrenScreen> {
                         height: 20,
                       ),
                       CustomTextField(
+                        controller: passwordCtrl,
                         isPassword: true,
                         label: "Mot de passe",
                       ),
@@ -147,6 +170,7 @@ class _AddChildrenScreenState extends State<AddChildrenScreen> {
                         ),
                       ),
                       CustomTextField(
+                        controller: schoolName,
                         isPassword: false,
                         label: "Nom de l'école",
                       ),
@@ -203,6 +227,7 @@ class _AddChildrenScreenState extends State<AddChildrenScreen> {
                         height: 20,
                       ),
                       CustomTextField(
+                        controller: phoneCtrl,
                         isPassword: false,
                         label: "Tel",
                         type: TextInputType.phone,
@@ -229,6 +254,32 @@ class _AddChildrenScreenState extends State<AddChildrenScreen> {
                   ),
                 ),
               ),
+              onTap: () async {
+                Child newChild = new Child(
+                  fullname: fullname.text,
+                  grade: niveau,
+                  email: emailCtrl.text,
+                  phoneTel: phoneCtrl.text,
+                  schoolName: schoolName.text,
+                );
+
+                if (choice.isEmpty) {
+                  showInfoDialog(
+                      context, 'Info', "Vous devez renseigner tous les champs");
+                } else {
+                  final response =
+                      await ChildService().create(newChild, passwordCtrl.text);
+                  if (response != null) {
+                    print("on est ici au moins");
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomeScreen(),
+                      ),
+                    );
+                  }
+                }
+              },
             ),
           ),
         ),

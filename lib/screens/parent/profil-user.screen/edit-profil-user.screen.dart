@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:ziivah/components/background.component.dart';
 import 'package:ziivah/components/custom-textfield.component.dart';
 import 'package:ziivah/dialog/info.dialog.dart';
