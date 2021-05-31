@@ -3,10 +3,8 @@ import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:ziivah/components/background.component.dart';
 import 'package:ziivah/components/custom-textfield.component.dart';
 import 'package:ziivah/dialog/info.dialog.dart';
-import 'package:ziivah/models/parent.model.dart';
+import 'package:ziivah/screens/parent/edit-parent/edit-parent-profil.screen.dart';
 import 'package:ziivah/screens/parent/home-screen/home.screen.dart';
-import 'package:ziivah/screens/parent/profil-user.screen/edit-profil-user.screen.dart';
-import 'package:ziivah/services/parent.service.dart';
 import 'package:ziivah/theme/color.theme.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -29,14 +27,14 @@ class _LoginScreenState extends State<LoginScreen> {
           backgroundColor: Colors.transparent,
           body: Center(
             child: Container(
-              height: 450,
+              height: 500,
               width: MediaQuery.of(context).size.width - 30,
               child: Stack(
                 children: [
                   Positioned(
                     bottom: 0,
                     child: Container(
-                      height: 400,
+                      height: 450,
                       width: MediaQuery.of(context).size.width - 30,
                       decoration: BoxDecoration(
                           color: Colors.white54,
@@ -115,21 +113,95 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
+                          // Padding(
+                          //   padding: const EdgeInsets.symmetric(horizontal: 35),
+                          //   child: Row(
+                          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //     children: [
+                          //       Row(
+                          //         children: [
+                          //           Text(
+                          //             'Inscrivez vous maintenant',
+                          //             style: TextStyle(
+                          //               fontSize: 12,
+                          //               color: white,
+                          //             ),
+                          //           ),
+                          //         ],
+                          //       ),
+                          //       TextButton(
+                          //         onPressed: () {
+                          //           Navigator.push(
+                          //             context,
+                          //             MaterialPageRoute(
+                          //               builder: (context) =>
+                          //                   EditProfilScreen(),
+                          //             ),
+                          //           );
+                          //         },
+                          //         child: Text(
+                          //           "Cliquer ici?",
+                          //           style: TextStyle(
+                          //             fontSize: 12,
+                          //             color: white,
+                          //           ),
+                          //         ),
+                          //       )
+                          //     ],
+                          //   ),
+                          // ),
                           SizedBox(
                             height: 10,
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 35),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            child: Column(
                               children: [
                                 Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text(
+                                      'Pas de compte? ',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: white,
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                EditParentProfilScreen(),
+                                          ),
+                                        );
+                                      },
+                                      child: Text(
+                                        "Cliquer ici",
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          color: white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Checkbox(
                                       value: value,
-                                      onChanged: (value) {
+                                      onChanged: (val) {
+                                        print("ça passe ");
                                         setState(() {
-                                          this.value = value;
+                                          value = val;
                                         });
                                       },
                                       checkColor: Colors.blue[600],
@@ -142,26 +214,26 @@ class _LoginScreenState extends State<LoginScreen> {
                                         color: white,
                                       ),
                                     ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        // Navigator.push(
+                                        //   context,
+                                        //   MaterialPageRoute(
+                                        //     builder: (context) =>
+                                        //         EditProfilScreen(),
+                                        //   ),
+                                        // );
+                                      },
+                                      child: Text(
+                                        "Mot de passe oublié?",
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: white,
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            EditProfilScreen(),
-                                      ),
-                                    );
-                                  },
-                                  child: Text(
-                                    "Mot de passe oublié?",
-                                    style: TextStyle(
-                                      fontSize: 12,
-                                      color: white,
-                                    ),
-                                  ),
-                                )
                               ],
                             ),
                           ),

@@ -7,12 +7,12 @@ import 'package:ziivah/screens/parent/home-screen/home.screen.dart';
 import 'package:ziivah/services/parent.service.dart';
 import 'package:ziivah/theme/color.theme.dart';
 
-class EditProfilScreen extends StatefulWidget {
+class EditParentProfilScreen extends StatefulWidget {
   @override
-  _EditProfilScreenState createState() => _EditProfilScreenState();
+  _EditParentProfilScreenState createState() => _EditParentProfilScreenState();
 }
 
-class _EditProfilScreenState extends State<EditProfilScreen> {
+class _EditParentProfilScreenState extends State<EditParentProfilScreen> {
   void actionChoice(String choice) {
     if (choice == "Type 1") {
       setState(() {
