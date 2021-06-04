@@ -156,32 +156,32 @@ class _EditParentProfilScreenState extends State<EditParentProfilScreen> {
                     SizedBox(
                       height: 20,
                     ),
-                    Container(
-                        width: MediaQuery.of(context).size.width - 130,
-                        height: 70,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(abonnementChoice),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                PopupMenuButton<String>(
-                                  onSelected: actionChoice,
-                                  itemBuilder: (BuildContext context) {
-                                    return AbnType.abnType.map((String choice) {
-                                      return PopupMenuItem<String>(
-                                        value: choice,
-                                        child: Text(choice),
-                                      );
-                                    }).toList();
-                                  },
-                                ),
-                              ],
-                            ),
-                          ],
-                        )),
+                    // Container(
+                    //     width: MediaQuery.of(context).size.width - 130,
+                    //     height: 70,
+                    //     child: Row(
+                    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //       children: [
+                    //         Text(abonnementChoice),
+                    //         Column(
+                    //           crossAxisAlignment: CrossAxisAlignment.end,
+                    //           mainAxisAlignment: MainAxisAlignment.center,
+                    //           children: [
+                    //             PopupMenuButton<String>(
+                    //               onSelected: actionChoice,
+                    //               itemBuilder: (BuildContext context) {
+                    //                 return AbnType.abnType.map((String choice) {
+                    //                   return PopupMenuItem<String>(
+                    //                     value: choice,
+                    //                     child: Text(choice),
+                    //                   );
+                    //                 }).toList();
+                    //               },
+                    //             ),
+                    //           ],
+                    //         ),
+                    //       ],
+                    //     )),
                     SizedBox(
                       height: 20,
                     ),
@@ -207,12 +207,18 @@ class _EditParentProfilScreenState extends State<EditParentProfilScreen> {
                           );
                           final res = await ParentService().create(newParent);
                           if (res != null) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => HomeScreen(),
-                              ),
-                            );
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return FutureBuilder(
+                                  future: ParentService().isEnabled(),
+                                  builder: (context,
+                                      AsyncSnapshot<bool> openSnapshot) {
+                                    if (openSnapshot.data == false)
+                                      return null;
+                                    else
+                                      return HomeScreen();
+                                  });
+                            }));
                           } else {
                             showInfoDialog(context, "Oups",
                                 'Une erreur est subvenue veuillez contacter le service clientelle');

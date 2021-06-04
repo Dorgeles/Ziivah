@@ -71,6 +71,18 @@ class ParentService {
     return false;
   }
 
+  Future<bool> isEnabled() async {
+    final user = await ParseUser.currentUser();
+    if (user != null) {
+      final Parent parent = await getByUser(user);
+      if (parent != null) {
+        if (parent.enable == true) return true;
+      }
+      return false;
+    }
+    return false;
+  }
+
   Future<Parent> getByUser(ParseUser user) async {
     final pParent = ParseObject(_instanceRef);
     final QueryBuilder<ParseObject> query = QueryBuilder<ParseObject>(pParent);

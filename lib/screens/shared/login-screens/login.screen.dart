@@ -5,6 +5,7 @@ import 'package:ziivah/components/custom-textfield.component.dart';
 import 'package:ziivah/dialog/info.dialog.dart';
 import 'package:ziivah/screens/parent/edit-parent/edit-parent-profil.screen.dart';
 import 'package:ziivah/screens/parent/home-screen/home.screen.dart';
+import 'package:ziivah/services/parent.service.dart';
 import 'package:ziivah/theme/color.theme.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -83,13 +84,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                       password.text, username.text)
                                   .login();
                               if (response.success) {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => HomeScreen(),
-                                  ),
-                                );
-                              } else {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return FutureBuilder(
+                                      future: ParentService().isEnabled(),
+                                      builder: (context,
+                                          AsyncSnapshot<bool> openSnapshot) {
+                                        if (openSnapshot.data == false)
+                                          return null;
+                                        else
+                                          return HomeScreen();
+                                      });
+                                }));
+
                                 showInfoDialog(
                                   context,
                                   "Oups",

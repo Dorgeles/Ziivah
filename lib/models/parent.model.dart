@@ -9,6 +9,7 @@ class Parent {
   final String job;
   final String phoneTel;
   final int childrenCount;
+  final bool enable;
   final User user;
   final String objectId;
   final DateTime createdAt;
@@ -17,6 +18,7 @@ class Parent {
   Parent({
     this.image,
     this.user,
+    this.enable,
     this.objectId,
     this.createdAt,
     this.updateAt,
@@ -31,6 +33,7 @@ class Parent {
       : fullname = object.get('fullname'),
         phoneTel = object.get('phoneTel'),
         email = object.get('email'),
+        enable = object.get('enable'),
         image = object.get("image"),
         address = object.get('address'),
         job = object.get("job"),

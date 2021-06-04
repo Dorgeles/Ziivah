@@ -8,7 +8,7 @@ class Coach {
   final String email;
   final User user;
   final String commune;
-  final String phoneTel;
+  final String tel;
   final String objectId;
   final DateTime createdAt;
   final DateTime updateAt;
@@ -22,12 +22,12 @@ class Coach {
     this.email,
     this.user,
     this.commune,
-    this.phoneTel,
+    this.tel,
   });
   Coach.fromParse(ParseObject object)
       : firstname = object.get('firstname'),
         lastname = object.get('lastname'),
-        phoneTel = object.get('phoneTel'),
+        tel = object.get('tel'),
         email = object.get('email'),
         commune = object.get('commune'),
         user = object.get('user') != null

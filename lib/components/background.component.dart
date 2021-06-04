@@ -10,7 +10,8 @@ class BackGround extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('assets/bg.png'), fit: BoxFit.cover)),
+              image: AssetImage('assets/ZIIVAH ECRANDEMARAGE.jpg'),
+              fit: BoxFit.cover)),
     );
   }
 }
