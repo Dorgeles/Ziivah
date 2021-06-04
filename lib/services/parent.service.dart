@@ -30,13 +30,14 @@ class ParentService {
       ..set("job", args.job)
       ..set("address", args.address)
       ..set("childrenCount", args.childrenCount)
+      ..set("enable", args.enable)
       ..set("user", pUser);
     pParent.setACL(_acl);
-    print('on est ici');
-    final response = await pParent.save();
 
-    if (response != null) return Parent.fromParse(response.results.first);
-    return null;
+    final response = await pParent.save();
+    print(response.results.length);
+    // if (response != null) return Parent.fromParse(response.results.first);
+    // return null;
   }
 
   Future<Parent> getImageProfil(Parent args) async {
@@ -56,11 +57,16 @@ class ParentService {
     if (username.length != 0 && password.length != 0 && email.length != 0) {
       var user = ParseUser(username, password, email);
       if (user != null) {
+        print("on est aussi a la fin de la création d'user 1");
+
         final res = await user.create(); // CREATING THE USER
         if (res != null) {
+          print("on est aussi a la fin de la création d'user 2");
+
           var responseSignUp = await user.signUp(); // Registring the user
           if (responseSignUp != null) {
             var response = await user.login(); // login the user
+            print("on est aussi a la fin de la création d'user");
             return true;
           }
         }

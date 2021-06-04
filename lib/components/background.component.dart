@@ -9,9 +9,10 @@ class BackGround extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/ZIIVAH ECRANDEMARAGE.jpg'),
-              fit: BoxFit.cover)),
+        image: DecorationImage(
+            image: AssetImage('assets/ZIIVAH ECRANDEMARAGE.jpg'),
+            fit: BoxFit.cover),
+      ),
     );
   }
 }

@@ -25,7 +25,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
   Widget build(BuildContext context) {
     bool showPassword = false;
     return Container(
-      width: MediaQuery.of(context).size.width - 130,
+      width: MediaQuery.of(context).size.width - 60,
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(8)),
       child: TextFormField(
         controller: widget.controller,
         decoration: InputDecoration(
@@ -42,13 +43,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   ),
                 )
               : null,
-          enabledBorder: OutlineInputBorder(
+          border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(
               color: Colors.transparent,
             ),
           ),
-          border: InputBorder.none,
           fillColor: white,
           filled: true,
           prefixIcon: widget.icon == null
@@ -56,11 +56,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
               : Icon(
                   widget.icon,
                   color: grey,
-                  size: 40,
+                  size: 25,
                 ),
-          labelText: widget.label,
-          labelStyle: TextStyle(
-            fontSize: 20,
+          hintText: widget.label,
+          hintStyle: TextStyle(
+            fontSize: 14,
             color: grey,
           ),
         ),

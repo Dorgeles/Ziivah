@@ -16,7 +16,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
-  // TextEditingController username = TextEditingController();
   bool value = false;
 
   @override
@@ -38,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 450,
                       width: MediaQuery.of(context).size.width - 30,
                       decoration: BoxDecoration(
-                          color: Colors.white54,
+                          color: Color(0xff2e5970),
                           borderRadius: BorderRadius.circular(13)),
                       child: Column(
                         children: [
@@ -49,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             'Login',
                             style: TextStyle(
                               fontSize: 28,
-                              color: grey,
+                              color: white,
                             ),
                           ),
                           SizedBox(
@@ -104,18 +103,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                 );
                               }
                             },
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                bottom: 12.0,
-                                top: 12.0,
-                                left: 45,
-                                right: 45,
-                              ),
-                              child: Text(
-                                'Connexion',
-                                style: TextStyle(
-                                  fontSize: 30,
-                                  color: white,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width - 90,
+                              child: Center(
+                                child: Text(
+                                  'Connexion',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: white,
+                                  ),
                                 ),
                               ),
                             ),
@@ -158,22 +154,27 @@ class _LoginScreenState extends State<LoginScreen> {
                           //   ),
                           // ),
                           SizedBox(
-                            height: 10,
+                            height: 20,
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 35),
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: Column(
                               children: [
                                 Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    SizedBox(
+                                      width: 2,
+                                    ),
                                     Text(
                                       'Pas de compte? ',
                                       style: TextStyle(
-                                        fontSize: 12,
+                                        fontSize: 14,
                                         color: white,
                                       ),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
                                     ),
                                     GestureDetector(
                                       onTap: () {
@@ -188,7 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       child: Text(
                                         "Cliquer ici",
                                         style: TextStyle(
-                                          fontSize: 15,
+                                          fontSize: 14,
                                           color: white,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -200,8 +201,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   height: 20,
                                 ),
                                 Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Checkbox(
                                       value: value,
@@ -220,6 +219,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                         fontSize: 12,
                                         color: white,
                                       ),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
                                     ),
                                     GestureDetector(
                                       onTap: () {

@@ -37,6 +37,7 @@ class _EditParentProfilScreenState extends State<EditParentProfilScreen> {
   TextEditingController phone = TextEditingController();
   bool isMale = false;
   bool isFemale = false;
+  int step = 1;
   String abonnementChoice = "Type d'abonnement";
 
   @override
@@ -48,205 +49,241 @@ class _EditParentProfilScreenState extends State<EditParentProfilScreen> {
           backgroundColor: Colors.transparent,
           body: Center(
             child: Container(
-              height: MediaQuery.of(context).size.height - 170,
+              height: MediaQuery.of(context).size.height - 220,
               width: MediaQuery.of(context).size.width - 30,
               decoration: BoxDecoration(
-                color: Colors.white38,
+                color: Color(0xff2e5970),
                 borderRadius: BorderRadius.circular(13),
               ),
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    SizedBox(
-                      height: 50,
-                    ),
-                    CustomTextField(
-                      isPassword: false,
-                      controller: fullname,
-                      label: "Noms prénoms",
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    CustomTextField(
-                      isPassword: false,
-                      controller: email,
-                      type: TextInputType.emailAddress,
-                      label: "Email",
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    CustomTextField(
-                      isPassword: true,
-                      controller: password,
-                      label: "Mot de passe",
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 50),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Sexe',
-                            style: TextStyle(fontSize: 12, color: white),
-                          ),
-                          Row(
+                    step == 1
+                        ? Column(
                             children: [
-                              Text(
-                                'Masculin',
-                                style: TextStyle(fontSize: 12, color: white),
+                              SizedBox(
+                                height: 50,
                               ),
-                              Checkbox(
-                                value: isMale,
-                                onChanged: (value) {
+                              CustomTextField(
+                                isPassword: false,
+                                controller: fullname,
+                                label: "Noms prénoms",
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              CustomTextField(
+                                isPassword: false,
+                                controller: email,
+                                type: TextInputType.emailAddress,
+                                label: "Email",
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              CustomTextField(
+                                isPassword: true,
+                                controller: password,
+                                label: "Mot de passe",
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 50),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Sexe',
+                                      style:
+                                          TextStyle(fontSize: 12, color: white),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Masculin',
+                                          style: TextStyle(
+                                              fontSize: 12, color: white),
+                                        ),
+                                        Checkbox(
+                                          value: isMale,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              this.isMale = value;
+                                            });
+                                          },
+                                          checkColor: Colors.blue[600],
+                                          activeColor: white,
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          'Féminin',
+                                          style: TextStyle(
+                                              fontSize: 12, color: white),
+                                        ),
+                                        Checkbox(
+                                          value: isMale,
+                                          onChanged: (value1) {
+                                            print("ça passe ");
+                                            setState(() {
+                                              this.isFemale = value1;
+                                            });
+                                          },
+                                          checkColor: Colors.blue[600],
+                                          activeColor: white,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              RaisedButton(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8)),
+                                color: Colors.blue[600],
+                                onPressed: () {
                                   setState(() {
-                                    this.isMale = value;
+                                    step = 2;
                                   });
                                 },
-                                checkColor: Colors.blue[600],
-                                activeColor: white,
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width - 90,
+                                  child: Center(
+                                    child: Text(
+                                      'Suivant',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ],
-                          ),
-                          Row(
+                          )
+                        : Container(),
+                    step == 2
+                        ? Column(
                             children: [
-                              Text(
-                                'Féminin',
-                                style: TextStyle(fontSize: 12, color: white),
+                              SizedBox(
+                                height: 50,
                               ),
-                              Checkbox(
-                                value: isMale,
-                                onChanged: (value1) {
-                                  print("ça passe ");
-                                  setState(() {
-                                    this.isFemale = value1;
-                                  });
+                              CustomTextField(
+                                controller: address,
+                                isPassword: false,
+                                label: "Situation géographique",
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              CustomTextField(
+                                isPassword: false,
+                                controller: jobName,
+                                label: "Fonction",
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              CustomTextField(
+                                controller: phone,
+                                isPassword: false,
+                                label: "Tel",
+                                type: TextInputType.phone,
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              // Container(
+                              //     width: MediaQuery.of(context).size.width - 130,
+                              //     height: 70,
+                              //     child: Row(
+                              //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              //       children: [
+                              //         Text(abonnementChoice),
+                              //         Column(
+                              //           crossAxisAlignment: CrossAxisAlignment.end,
+                              //           mainAxisAlignment: MainAxisAlignment.center,
+                              //           children: [
+                              //             PopupMenuButton<String>(
+                              //               onSelected: actionChoice,
+                              //               itemBuilder: (BuildContext context) {
+                              //                 return AbnType.abnType.map((String choice) {
+                              //                   return PopupMenuItem<String>(
+                              //                     value: choice,
+                              //                     child: Text(choice),
+                              //                   );
+                              //                 }).toList();
+                              //               },
+                              //             ),
+                              //           ],
+                              //         ),
+                              //       ],
+                              //     )),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              RaisedButton(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8)),
+                                color: Colors.blue[600],
+                                onPressed: () async {
+                                  final response = await ParentService()
+                                      .registerNewUser(
+                                          email: email.text,
+                                          username: fullname.text,
+                                          password: password.text);
+                                  if (response) {
+                                    print(response);
+                                    // Parent newParent = new Parent(
+                                    //   address: address.text,
+                                    //   childrenCount: 0,
+                                    //   email: email.text,
+                                    //   fullname: fullname.text,
+                                    //   image: null,
+                                    //   job: jobName.text,
+                                    //   phoneTel: phone.text,
+                                    //   enable: false,
+                                    // );
+                                    // final res =
+                                    //     await ParentService().create(newParent);
+                                    // if (res != null) {
+                                    //   Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //       builder: (context) => HomeScreen(),
+                                    //     ),
+                                    //   );
+                                    // } else {
+                                    //   showInfoDialog(context, "Oups",
+                                    //       'Une erreur est subvenue veuillez contacter le service clientelle');
+                                    // }
+                                  } else {
+                                    showInfoDialog(context, "Oups",
+                                        'Vous devez remplir tous les champs de saisi');
+                                  }
                                 },
-                                checkColor: Colors.blue[600],
-                                activeColor: white,
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width - 90,
+                                  child: Center(
+                                    child: Text(
+                                      'Enregistrer',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
+                              SizedBox(
+                                height: 40,
+                              )
                             ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    CustomTextField(
-                      controller: address,
-                      isPassword: false,
-                      label: "Situation géographique",
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    CustomTextField(
-                      isPassword: false,
-                      controller: jobName,
-                      label: "Fonction",
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    CustomTextField(
-                      controller: phone,
-                      isPassword: false,
-                      label: "Tel",
-                      type: TextInputType.phone,
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    // Container(
-                    //     width: MediaQuery.of(context).size.width - 130,
-                    //     height: 70,
-                    //     child: Row(
-                    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //       children: [
-                    //         Text(abonnementChoice),
-                    //         Column(
-                    //           crossAxisAlignment: CrossAxisAlignment.end,
-                    //           mainAxisAlignment: MainAxisAlignment.center,
-                    //           children: [
-                    //             PopupMenuButton<String>(
-                    //               onSelected: actionChoice,
-                    //               itemBuilder: (BuildContext context) {
-                    //                 return AbnType.abnType.map((String choice) {
-                    //                   return PopupMenuItem<String>(
-                    //                     value: choice,
-                    //                     child: Text(choice),
-                    //                   );
-                    //                 }).toList();
-                    //               },
-                    //             ),
-                    //           ],
-                    //         ),
-                    //       ],
-                    //     )),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
-                      color: Colors.blue[600],
-                      onPressed: () async {
-                        final response = await ParentService().registerNewUser(
-                            email: email.text,
-                            username: fullname.text,
-                            password: password.text);
-                        if (response) {
-                          print(response);
-                          Parent newParent = new Parent(
-                            address: address.text,
-                            childrenCount: 0,
-                            email: email.text,
-                            fullname: fullname.text,
-                            image: null,
-                            job: jobName.text,
-                            phoneTel: phone.text,
-                          );
-                          final res = await ParentService().create(newParent);
-                          if (res != null) {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return FutureBuilder(
-                                  future: ParentService().isEnabled(),
-                                  builder: (context,
-                                      AsyncSnapshot<bool> openSnapshot) {
-                                    if (openSnapshot.data == false)
-                                      return null;
-                                    else
-                                      return HomeScreen();
-                                  });
-                            }));
-                          } else {
-                            showInfoDialog(context, "Oups",
-                                'Une erreur est subvenue veuillez contacter le service clientelle');
-                          }
-                        } else {
-                          showInfoDialog(context, "Oups",
-                              'Vous devez remplir tous les champs de saisi');
-                        }
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          bottom: 12.0,
-                          top: 12.0,
-                          left: 45,
-                          right: 45,
-                        ),
-                        child: Text(
-                          'Enregistrer',
-                          style: TextStyle(
-                            fontSize: 30,
-                            color: white,
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 40,
-                    )
+                          )
+                        : Container()
                   ],
                 ),
               ),
