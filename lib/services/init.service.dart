@@ -19,10 +19,10 @@ class InitService {
         await new Directory(appDocDirectory.path + '/' + 'dir')
             .create(recursive: true);
     await Parse().initialize(
-      "0RrHq9YQ5urnftK8Jp6c59y2qrAHHY1nZH1BSXCZ",
+      "5fBDOEyfgJDW53w0PdguYKaSH7jUeNfs1D1xLlSw",
       "https://parseapi.back4app.com/",
       clientKey:
-          "2TKfQqTwd2HpRY8a8DE0wzJiybuFkKZvj7165dKg", // Required for Back4App and others
+          "ujiHLwGdDIGGTvEQTy9gIXmPyZ1UQseNYaOiy1k6", // Required for Back4App and others
       debug: false, // When enabled, prints logs to console
       coreStore:
           await CoreStoreSembastImp.getInstance(directory.path + "/data.db"),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ziivah/screens/parent/home-screen/home.screen.dart';
+import 'package:ziivah/screens/shared/onboarding/onboarding.screen.dart';
 import 'screens/shared/loading-screen.dart';
 import 'screens/shared/login-screens/login.screen.dart';
 import 'screens/student/home-screen/home.screen.dart';
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: colorCustom,
       ),
-      home: LoginScreen(),
+      home: OnBoardingScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
