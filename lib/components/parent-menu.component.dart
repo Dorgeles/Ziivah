@@ -18,7 +18,7 @@ class ParentMenu extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       child: Container(
-        width: screenSize.width / 1.15 - 150,
+        width: screenSize.width / 1.0 - 150,
         child: Row(
           children: [
             SizedBox(
@@ -33,6 +33,7 @@ class ParentMenu extends StatelessWidget {
             ),
             Text(
               title,
+              style: TextStyle(fontSize: 15),
             ),
           ],
         ),

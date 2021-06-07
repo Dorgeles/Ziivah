@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:ziivah/components/background.component.dart';
 import 'package:ziivah/components/custom-textfield.component.dart';
 import 'package:ziivah/dialog/info.dialog.dart';
+import 'package:ziivah/dialog/progress.dialog.dart';
 import 'package:ziivah/screens/parent/edit-parent/edit-parent-profil.screen.dart';
 import 'package:ziivah/screens/parent/home-screen/home.screen.dart';
-import 'package:ziivah/services/parent.service.dart';
 import 'package:ziivah/theme/color.theme.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -79,29 +80,26 @@ class _LoginScreenState extends State<LoginScreen> {
                                 borderRadius: BorderRadius.circular(8)),
                             color: Colors.blue[600],
                             onPressed: () async {
-                              final response = await ParseUser(username.text,
-                                      password.text, username.text)
-                                  .login();
-                              if (response.success) {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return FutureBuilder(
-                                      future: ParentService().isEnabled(),
-                                      builder: (context,
-                                          AsyncSnapshot<bool> openSnapshot) {
-                                        if (openSnapshot.data == false)
-                                          return null;
-                                        else
-                                          return HomeScreen();
-                                      });
-                                }));
-
-                                showInfoDialog(
+                              final ProgressDialog prog =
+                                  showprogressDialog(context: context);
+                              prog.show();
+                              var user = ParseUser(
+                                  username.text, password.text, username.text);
+                              final response = await user.login();
+                              if (response != null) {
+                                prog.hide();
+                                Navigator.push(
                                   context,
-                                  "Oups",
-                                  "Vous n'avez pas de compte ",
+                                  MaterialPageRoute(
+                                    builder: (context) => HomeScreen(),
+                                  ),
                                 );
                               }
+                              showInfoDialog(
+                                context,
+                                "Oups",
+                                "Vous n'avez pas de compte ",
+                              );
                             },
                             child: Container(
                               width: MediaQuery.of(context).size.width - 90,
@@ -116,43 +114,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
-                          // Padding(
-                          //   padding: const EdgeInsets.symmetric(horizontal: 35),
-                          //   child: Row(
-                          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          //     children: [
-                          //       Row(
-                          //         children: [
-                          //           Text(
-                          //             'Inscrivez vous maintenant',
-                          //             style: TextStyle(
-                          //               fontSize: 12,
-                          //               color: white,
-                          //             ),
-                          //           ),
-                          //         ],
-                          //       ),
-                          //       TextButton(
-                          //         onPressed: () {
-                          //           Navigator.push(
-                          //             context,
-                          //             MaterialPageRoute(
-                          //               builder: (context) =>
-                          //                   EditProfilScreen(),
-                          //             ),
-                          //           );
-                          //         },
-                          //         child: Text(
-                          //           "Cliquer ici?",
-                          //           style: TextStyle(
-                          //             fontSize: 12,
-                          //             color: white,
-                          //           ),
-                          //         ),
-                          //       )
-                          //     ],
-                          //   ),
-                          // ),
                           SizedBox(
                             height: 20,
                           ),

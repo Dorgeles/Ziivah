@@ -16,24 +16,23 @@ class ChildService {
 
   Future<Child> create(Child args, String password) async {
     // process of creating user for new child
-    var newUser = ParseUser(args.fullname, password, args.email);
+    var newUser =
+        ParseUser(args.fullname, password, '${args.username}@gmail.com')
+          ..set('profil', "child");
     final res = await newUser.create();
 
     if (res != null) {
       final ParseObject pChildUser = ParseObject("_User");
       pChildUser.objectId = newUser.objectId;
-      ParseUser user = await ParseUser.currentUser();
-      ParseObject pParent = ParseObject("Parent");
-      ParentService().getByUser(user).then((value) {
-        pParent.objectId = value.objectId;
-      });
+      final ParseObject pParent = ParseObject("Parent");
+      pParent.objectId = args.parent.objectId;
       // determination de l'access controle
       final _acl = await ACLService.ownerACL();
 
       ParseObject pChild = ParseObject(_instanceRef)
         ..set("fullname", args.fullname)
         ..set("phoneTel", args.phoneTel)
-        ..set("email", args.email)
+        ..set("email", args.username)
         ..set("niveau", args.grade)
         ..set("schoolName", args.schoolName)
         ..set("parent", pParent)
@@ -46,5 +45,21 @@ class ChildService {
       if (response != null) return Child.fromParse(response.results.first);
       return null;
     }
+  }
+
+  Future<List<Child>> getChildrenByParent(String parentId) async {
+    final pStudent = ParseObject(_instanceRef);
+    final QueryBuilder<ParseObject> query = QueryBuilder<ParseObject>(pStudent);
+
+    final pParent = ParseObject("Parent");
+    pParent.objectId = parentId;
+    query.includeObject(['student']);
+    query.whereEqualTo("parent", pParent);
+    final response = await query.query();
+    List<Child> results = [];
+    if (response != null) {
+      results = response.results.map((e) => Child.fromParse(e)).toList();
+    }
+    return results;
   }
 }

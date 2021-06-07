@@ -9,7 +9,7 @@ class Child {
   final User user;
   final String schoolName;
   final String phoneTel;
-  final String email;
+  final String username;
   final Parent parent;
   final List<Coach> coach;
   final String objectId;
@@ -21,7 +21,7 @@ class Child {
     this.createdAt,
     this.updateAt,
     this.fullname,
-    this.email,
+    this.username,
     this.grade,
     this.user,
     this.schoolName,
@@ -31,10 +31,10 @@ class Child {
   });
   Child.fromParse(ParseObject object)
       : fullname = object.get('fullname'),
-        grade = object.get('grade'),
+        grade = object.get('niveau'),
         schoolName = object.get('schoolName'),
         phoneTel = object.get('phoneTel'),
-        email = object.get('email'),
+        username = object.get('username'),
         user = object.get('user') != null
             ? User.fromParse(object.get('user'))
             : null,

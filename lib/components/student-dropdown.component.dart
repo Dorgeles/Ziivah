@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:ziivah/models/child.model.dart';
 import 'package:ziivah/theme/color.theme.dart';
 
 import 'image-hodler.component.dart';
 
 class StudentItem extends StatefulWidget {
-  final String name;
-  final String classe;
-  final String schoolName;
+  final Child child;
   const StudentItem({
     Key key,
     @required this.screenSize,
-    this.name,
-    this.classe,
-    this.schoolName,
+    this.child,
   }) : super(key: key);
 
   final Size screenSize;
@@ -27,7 +24,7 @@ class _StudentItemState extends State<StudentItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: white,
+      margin: EdgeInsets.only(bottom: 5),
       child: Column(
         children: [
           GestureDetector(
@@ -38,104 +35,108 @@ class _StudentItemState extends State<StudentItem> {
                 isDisplay = !isDisplay;
               });
             },
-            child: Container(
-              height: 50,
-              width: widget.screenSize.width,
-              child: Row(
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: 30,
-                  ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.person_outline_outlined,
-                        size: 50,
-                        color: dark,
-                      ),
-                      Text(
-                        widget.name,
-                        style: TextStyle(
-                          fontSize: 20,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Container(
+                height: 50,
+                width: widget.screenSize.width,
+                child: Row(
+                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: 30,
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.person_outline_outlined,
+                          size: 40,
                           color: dark,
                         ),
-                      ),
-                    ],
-                  ),
-                  Spacer(),
-                  Icon(
-                    !isDisplay ? LineIcons.list : Icons.line_style_sharp,
-                    size: 50,
-                    color: dark,
-                  ),
-                  SizedBox(
-                    width: 12,
-                  ),
-                ],
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              widget.child.fullname,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: dark,
+                              ),
+                            ),
+                            Text(
+                              widget.child.grade,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: dark,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Spacer(),
+                    Icon(
+                      !isDisplay ? LineIcons.list : Icons.line_style_sharp,
+                      size: 30,
+                      color: dark,
+                    ),
+                    SizedBox(
+                      width: 12,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-          !isDisplay
-              ? Divider(
-                  color: blue,
-                )
-              : Container(),
           isDisplay
               ? Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 40),
+                  padding:
+                      const EdgeInsets.only(left: 20, right: 20, bottom: 20),
                   child: Column(
                     children: [
                       Divider(
                         color: dark,
                       ),
-                      Row(
-                        children: [
-                          ImageHolder(
-                            size: 90,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Column(
-                            children: [
-                              Text(
-                                widget.name,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
-                              ),
-                              Text(
-                                widget.classe,
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  color: grey,
-                                ),
-                              ),
-                              Text(
-                                widget.schoolName,
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  color: grey,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
                       SizedBox(
-                        height: 40,
+                        height: 20,
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Container(
                             height: 130,
                             width: 130,
                             decoration: BoxDecoration(
                               border: Border.all(color: dark, width: 1),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  "assets/decision-making.png",
+                                  fit: BoxFit.cover,
+                                  height: 80,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  height: 20,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                    color: primary,
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: Center(
+                                    child: Text('Quizz'),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                           Container(
@@ -143,7 +144,31 @@ class _StudentItemState extends State<StudentItem> {
                             width: 130,
                             decoration: BoxDecoration(
                               border: Border.all(color: dark, width: 1),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  "assets/pie-chart.png",
+                                  fit: BoxFit.cover,
+                                  height: 80,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  height: 20,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                    color: primary,
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: Center(
+                                    child: Text('Resultats'),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                         ],
@@ -152,14 +177,38 @@ class _StudentItemState extends State<StudentItem> {
                         height: 20,
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Container(
                             height: 130,
                             width: 130,
                             decoration: BoxDecoration(
                               border: Border.all(color: dark, width: 1),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  "assets/project.png",
+                                  fit: BoxFit.cover,
+                                  height: 80,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  height: 20,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                    color: primary,
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: Center(
+                                    child: Text('Bulletin'),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                           Container(
@@ -167,20 +216,40 @@ class _StudentItemState extends State<StudentItem> {
                             width: 130,
                             decoration: BoxDecoration(
                               border: Border.all(color: dark, width: 1),
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  "assets/statistics.png",
+                                  fit: BoxFit.cover,
+                                  height: 80,
+                                ),
+                                Container(
+                                  height: 20,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                    color: primary,
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: Center(
+                                    child: Text('Progression'),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                         ],
                       ),
-                      Divider(
-                        color: dark,
-                      )
                     ],
                   ),
                 )
               : Container()
         ],
       ),
+      decoration:
+          BoxDecoration(color: white, borderRadius: BorderRadius.circular(5)),
     );
   }
 }

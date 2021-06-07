@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: colorCustom,
       ),
-      home: OnBoardingScreen(),
+      home: HomeScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:ziivah/components/background.component.dart';
 import 'package:ziivah/components/custom-textfield.component.dart';
 import 'package:ziivah/dialog/info.dialog.dart';
+import 'package:ziivah/dialog/progress.dialog.dart';
 import 'package:ziivah/models/parent.model.dart';
 import 'package:ziivah/screens/parent/home-screen/home.screen.dart';
 import 'package:ziivah/services/parent.service.dart';
@@ -196,32 +198,6 @@ class _EditParentProfilScreenState extends State<EditParentProfilScreen> {
                               SizedBox(
                                 height: 20,
                               ),
-                              // Container(
-                              //     width: MediaQuery.of(context).size.width - 130,
-                              //     height: 70,
-                              //     child: Row(
-                              //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              //       children: [
-                              //         Text(abonnementChoice),
-                              //         Column(
-                              //           crossAxisAlignment: CrossAxisAlignment.end,
-                              //           mainAxisAlignment: MainAxisAlignment.center,
-                              //           children: [
-                              //             PopupMenuButton<String>(
-                              //               onSelected: actionChoice,
-                              //               itemBuilder: (BuildContext context) {
-                              //                 return AbnType.abnType.map((String choice) {
-                              //                   return PopupMenuItem<String>(
-                              //                     value: choice,
-                              //                     child: Text(choice),
-                              //                   );
-                              //                 }).toList();
-                              //               },
-                              //             ),
-                              //           ],
-                              //         ),
-                              //       ],
-                              //     )),
                               SizedBox(
                                 height: 20,
                               ),
@@ -230,36 +206,39 @@ class _EditParentProfilScreenState extends State<EditParentProfilScreen> {
                                     borderRadius: BorderRadius.circular(8)),
                                 color: Colors.blue[600],
                                 onPressed: () async {
+                                  final ProgressDialog prog =
+                                      showprogressDialog(context: context);
+                                  prog.show();
                                   final response = await ParentService()
                                       .registerNewUser(
                                           email: email.text,
                                           username: fullname.text,
                                           password: password.text);
                                   if (response) {
-                                    print(response);
-                                    // Parent newParent = new Parent(
-                                    //   address: address.text,
-                                    //   childrenCount: 0,
-                                    //   email: email.text,
-                                    //   fullname: fullname.text,
-                                    //   image: null,
-                                    //   job: jobName.text,
-                                    //   phoneTel: phone.text,
-                                    //   enable: false,
-                                    // );
-                                    // final res =
-                                    //     await ParentService().create(newParent);
-                                    // if (res != null) {
-                                    //   Navigator.push(
-                                    //     context,
-                                    //     MaterialPageRoute(
-                                    //       builder: (context) => HomeScreen(),
-                                    //     ),
-                                    //   );
-                                    // } else {
-                                    //   showInfoDialog(context, "Oups",
-                                    //       'Une erreur est subvenue veuillez contacter le service clientelle');
-                                    // }
+                                    Parent newParent = new Parent(
+                                      address: address.text,
+                                      childrenCount: 0,
+                                      email: email.text,
+                                      fullname: fullname.text,
+                                      image: null,
+                                      job: jobName.text,
+                                      phoneTel: phone.text,
+                                      enable: false,
+                                    );
+                                    final res =
+                                        await ParentService().create(newParent);
+                                    if (res != null) {
+                                      prog.hide();
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => HomeScreen(),
+                                        ),
+                                      );
+                                    } else {
+                                      showInfoDialog(context, "Oups",
+                                          'Une erreur est subvenue veuillez contacter le service clientelle');
+                                    }
                                   } else {
                                     showInfoDialog(context, "Oups",
                                         'Vous devez remplir tous les champs de saisi');

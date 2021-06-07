@@ -67,19 +67,59 @@ class _AddChildrenScreenState extends State<AddChildrenScreen> {
         SafeArea(
           child: Scaffold(
             backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              title: Text("Ajouter un enfant"),
+              actions: [
+                IconButton(
+                    onPressed: () async {
+                      Child newChild = new Child(
+                        parent: _parent,
+                        fullname: fullname.text,
+                        grade: niveau,
+                        username: emailCtrl.text,
+                        phoneTel: phoneCtrl.text,
+                        schoolName: schoolName.text,
+                      );
+
+                      if (choice.isEmpty) {
+                        showInfoDialog(context, 'Info',
+                            "Vous devez renseigner tous les champs");
+                      } else {
+                        final response = await ChildService()
+                            .create(newChild, passwordCtrl.text);
+                        if (response != null) {
+                          print("on est ici au moins");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HomeScreen(),
+                            ),
+                          );
+                        }
+                      }
+                    },
+                    icon: Icon(
+                      Icons.check,
+                      size: 25,
+                      color: Colors.green,
+                    ))
+              ],
+            ),
             body: Center(
               child: Container(
                 height: MediaQuery.of(context).size.height - 150,
                 width: MediaQuery.of(context).size.width - 30,
                 decoration: BoxDecoration(
-                  color: Colors.white38,
+                  color: darkBlue,
                   borderRadius: BorderRadius.circular(13),
                 ),
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 50,
+                        height: 20,
                       ),
                       CustomTextField(
                         controller: fullname,
@@ -93,7 +133,7 @@ class _AddChildrenScreenState extends State<AddChildrenScreen> {
                         controller: emailCtrl,
                         isPassword: false,
                         type: TextInputType.emailAddress,
-                        label: "Email",
+                        label: "Nom d'utilisateur",
                       ),
                       SizedBox(
                         height: 20,
@@ -178,7 +218,7 @@ class _AddChildrenScreenState extends State<AddChildrenScreen> {
                         height: 20,
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width - 130,
+                        width: MediaQuery.of(context).size.width - 63,
                         height: 60,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
@@ -239,47 +279,6 @@ class _AddChildrenScreenState extends State<AddChildrenScreen> {
                   ),
                 ),
               ),
-            ),
-            bottomSheet: GestureDetector(
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: 60,
-                child: Center(
-                  child: Text(
-                    'Enregister',
-                    style: TextStyle(
-                      fontSize: 25,
-                      color: dark,
-                    ),
-                  ),
-                ),
-              ),
-              onTap: () async {
-                Child newChild = new Child(
-                  fullname: fullname.text,
-                  grade: niveau,
-                  email: emailCtrl.text,
-                  phoneTel: phoneCtrl.text,
-                  schoolName: schoolName.text,
-                );
-
-                if (choice.isEmpty) {
-                  showInfoDialog(
-                      context, 'Info', "Vous devez renseigner tous les champs");
-                } else {
-                  final response =
-                      await ChildService().create(newChild, passwordCtrl.text);
-                  if (response != null) {
-                    print("on est ici au moins");
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => HomeScreen(),
-                      ),
-                    );
-                  }
-                }
-              },
             ),
           ),
         ),

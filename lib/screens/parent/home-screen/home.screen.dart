@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 import 'package:ziivah/components/background.component.dart';
 import 'package:ziivah/components/image-hodler.component.dart';
 import 'package:ziivah/components/parent-drawer.component.dart';
 import 'package:ziivah/components/student-dropdown.component.dart';
+import 'package:ziivah/models/child.model.dart';
 import 'package:ziivah/models/parent.model.dart';
+import 'package:ziivah/services/child.service.dart';
 import 'package:ziivah/services/parent.service.dart';
 import 'package:ziivah/theme/color.theme.dart';
 
@@ -16,6 +17,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   Parent _parent;
+  List<Child> children = [];
   bool loading = false;
   @override
   void initState() {
@@ -26,6 +28,11 @@ class _HomeScreenState extends State<HomeScreen> {
         setState(() {
           _parent = parent;
           loading = true;
+        });
+        ChildService().getChildrenByParent(parent.objectId).then((value) {
+          setState(() {
+            children = value;
+          });
         });
       });
     });
@@ -42,62 +49,57 @@ class _HomeScreenState extends State<HomeScreen> {
         SafeArea(
           child: Scaffold(
             backgroundColor: Colors.transparent,
+            appBar: AppBar(
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              leading: IconButton(
+                onPressed: () {
+                  if (_scaffoldKey.currentState.isDrawerOpen) {
+                    _scaffoldKey.currentState.openEndDrawer();
+                  } else {
+                    _scaffoldKey.currentState.openDrawer();
+                  }
+                },
+                icon: Icon(Icons.menu),
+              ),
+              title: Text('Mon acceuil'),
+              actions: [
+                CircleAvatar(
+                  backgroundColor: blue,
+                ),
+                SizedBox(
+                  width: 10,
+                )
+              ],
+            ),
             key: _scaffoldKey,
             body: loading == false
                 ? Container()
                 : SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 10,
-                            ),
-                            ImageHolder(
-                              size: 60,
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Column(
-                              children: [
-                                Text(
-                                  _parent.fullname,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                                Text(
-                                  _parent != null ? _parent.job : "",
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    color: grey,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        StudentItem(
-                          screenSize: screenSize,
-                          classe: "Terminale S",
-                          name: "Wifisan aslan Dje Bi",
-                          schoolName: "Farandole",
-                        ),
-                        StudentItem(
-                          screenSize: screenSize,
-                          classe: "Première S",
-                          name: "Camille Scart Dje Lou",
-                          schoolName: "Farandole",
-                        ),
-                      ],
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 10,
+                          ),
+                          ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: children.length,
+                              itemBuilder: (context, index) {
+                                return StudentItem(
+                                  screenSize: screenSize,
+                                  child: children[index],
+                                );
+                              })
+                          // StudentItem(
+
+                          // ),
+                          // StudentItem(
+
+                          // ),
+                        ],
+                      ),
                     ),
                   ),
             drawer: ParentDrawer(),

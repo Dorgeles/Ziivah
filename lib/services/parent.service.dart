@@ -32,12 +32,12 @@ class ParentService {
       ..set("childrenCount", args.childrenCount)
       ..set("enable", args.enable)
       ..set("user", pUser);
+
     pParent.setACL(_acl);
 
     final response = await pParent.save();
-    print(response.results.length);
-    // if (response != null) return Parent.fromParse(response.results.first);
-    // return null;
+    if (response != null) return Parent.fromParse(response.results.first);
+    return null;
   }
 
   Future<Parent> getImageProfil(Parent args) async {
@@ -55,7 +55,7 @@ class ParentService {
   Future<bool> registerNewUser(
       {String username, String password, String email}) async {
     if (username.length != 0 && password.length != 0 && email.length != 0) {
-      var user = ParseUser(username, password, email);
+      var user = ParseUser(username, password, email)..set("profil", "parent");
       if (user != null) {
         print("on est aussi a la fin de la création d'user 1");
 
