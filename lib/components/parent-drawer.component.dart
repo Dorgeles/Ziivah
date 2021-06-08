@@ -6,6 +6,7 @@ import 'package:ziivah/models/parent.model.dart';
 import 'package:ziivah/screens/parent/add-children/add-children.screen.dart';
 import 'package:ziivah/screens/parent/home-screen/home.screen.dart';
 import 'package:ziivah/screens/parent/parent-parameter/parameter.screen.dart';
+import 'package:ziivah/screens/shared/library/library.screen.dart';
 import 'package:ziivah/services/child.service.dart';
 import 'package:ziivah/services/parent.service.dart';
 import 'package:ziivah/theme/color.theme.dart';
@@ -160,12 +161,12 @@ class _ParentDrawerState extends State<ParentDrawer> {
                             icon: LineIcons.bookOpen,
                             title: "Librairie",
                             action: () {
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) => AddChildrenScreen(),
-                              //   ),
-                              // );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LibraryScreen(),
+                                ),
+                              );
                             },
                           ),
                           SizedBox(
